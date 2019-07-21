@@ -28,12 +28,13 @@ export function $addListener<T = Event>(
   listener: CustomListener<T>,
   useCapture?: boolean,
 ): RemoveListener {
-  const addListener = (element as any)[$addEventListener]
-  addListener(prefix + eventName, listener, useCapture)
+  const eName = prefix + eventName
+  const addListener = (element as any)[$addEventListener].bind(element)
+  addListener(eName, listener, useCapture)
 
   return () => {
-    const removeListener = (element as any)[$removeEventListener]
-    removeListener(prefix + eventName, listener, useCapture)
+    const removeListener = (element as any)[$removeEventListener].bind(element)
+    removeListener(eName, listener, useCapture)
   }
 }
 

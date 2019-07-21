@@ -6,8 +6,6 @@ import { uglify } from 'rollup-plugin-uglify'
 import packageConf from './package.json'
 import baseConf from './rollup.config.base'
 
-const isES = process.env.PRODUCT === 'es'
-
 const formats = ['es', 'umd']
 
 function getEntries() {
@@ -36,7 +34,6 @@ const conf = entry => ({
   external: entry.external ? Object.keys(packageConf.dependencies || {}) : [],
   plugins: [
     ...baseConf.plugins,
-    baseConf.babelPlugin(entry.external),
     entry.needUglify !== false && uglify(),
     license({
       banner: `Bundle of <%= pkg.name %>
@@ -48,21 +45,20 @@ const conf = entry => ({
   ],
 })
 
-const configs = isES
-  ? [
-      conf({
-        name: 'index',
-        filename: './src/index.ts',
-        formats: ['es'],
-        needUglify: false,
-        external: true,
-      }),
-      {
-        input: './src/index.ts',
-        output: [{ file: './index.d.ts', format: 'es' }],
-        plugins: [dts()],
-      },
-    ]
-  : getEntries().map(conf)
-
-export default configs
+export default [
+  ...[
+    {
+      name: 'index',
+      filename: './src/index.ts',
+      formats: ['es'],
+      needUglify: false,
+      external: true,
+    },
+    ...getEntries(),
+  ].map(conf),
+  {
+    input: './src/index.ts',
+    output: [{ file: './index.d.ts', format: 'es' }],
+    plugins: [dts()],
+  },
+]

@@ -1,13 +1,13 @@
 {
   "name": "@livelybone/mouse-events",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Some reencapsulated mouse events, such as dragmove with deltaX/deltaY relative to mousedown, mouse wheel with good compatibility ...",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
   "unpkg": "./lib/umd/index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "rimraf ./lib && cross-env NODE_ENV=production PRODUCT=es rollup -c && cross-env NODE_ENV=production PRODUCT=umd rollup -c",
+    "build": "rimraf ./lib && cross-env NODE_ENV=production rollup -c",
     "build:test": "rimraf ./test-lib && cross-env NODE_ENV=test rollup -c rollup.config.test.js --sourcemap",
     "eslint": "eslint ./ --ext .ts,.js --fix",
     "test": "npm run build:test && cross-env NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- ./test",

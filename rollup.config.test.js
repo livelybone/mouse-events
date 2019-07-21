@@ -9,7 +9,6 @@ const conf = entry => ({
   })),
   plugins: [
     ...baseConf.plugins,
-    baseConf.babelPlugin(false),
   ],
 })
 

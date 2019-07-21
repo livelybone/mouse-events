@@ -80,13 +80,13 @@ const bind: DragMoveBindFn = (
       startEvent = ev
 
       const unbindMove = $addListener(
-        element,
+        window,
         EventType.move,
         $listener,
         useCapture,
       )
       const unbindEnd = $addListener(
-        element,
+        window,
         EventType.end,
         $listener,
         useCapture,

@@ -9,14 +9,9 @@ export default {
       extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     }),
     commonjs(),
-  ],
-  babelPlugin(externalHelpers) {
-    const babelPlugins = externalHelpers
-      ? ['@babel/plugin-external-helpers']
-      : []
-    return babel({
+    babel({
       babelrc: false,
-      externalHelpers,
+      externalHelpers: false,
       runtimeHelpers: true,
       extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
       presets: [
@@ -38,7 +33,7 @@ export default {
               '@babel/plugin-external-helpers',
               'istanbul',
             ]
-          : babelPlugins,
-    })
-  },
+          : [],
+    }),
+  ],
 }

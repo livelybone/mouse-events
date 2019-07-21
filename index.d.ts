@@ -8,19 +8,17 @@ export interface RemoveListener {
   (): void
 }
 
-declare function $addListener<T = Event>(
-  element: Element | Window,
-  eventName: string,
-  listener: CustomListener<T>,
-  useCapture?: boolean,
-): RemoveListener
-
-declare const $isMobile: boolean
-
-declare const Utils$addListener: typeof $addListener
-declare const Utils$isMobile: typeof $isMobile
 declare namespace Utils {
-  export { Utils$addListener as $addListener, Utils$isMobile as $isMobile }
+  function $addListener<T = Event>(
+    element: Element | Window,
+    eventName: string,
+    listener: CustomListener<T>,
+    useCapture?: boolean,
+  ): RemoveListener
+
+  const $isMobile: boolean
+
+  export { $addListener, $isMobile }
 }
 
 declare type OriginalEvent = MouseEvent | TouchEvent
@@ -47,11 +45,9 @@ interface DragMoveBindFn {
   (listener: DragMoveListener, useCapture?: boolean): RemoveListener
 }
 
-declare const bind: DragMoveBindFn
-
-declare const DragMoveBind: typeof bind
 declare namespace DragMove {
-  export { DragMoveBind as bind }
+  const bind: DragMoveBindFn
+  export { bind }
 }
 
 export { DragMove, MouseWheel, Utils }
