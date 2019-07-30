@@ -1,24 +1,22 @@
 import * as MouseWheel from '@livelybone/mouse-wheel'
 
-export interface CustomListener<T = Event> {
-  (ev: T): any
-}
-
-export interface RemoveListener {
-  (): void
-}
-
 declare namespace Utils {
-  function $addListener<T = Event>(
+  export interface CustomListener<T = Event> {
+    (ev: T): any
+  }
+
+  export interface RemoveListener {
+    (): void
+  }
+
+  export function $addListener<T = Event>(
     element: Element | Window,
     eventName: string,
     listener: CustomListener<T>,
     useCapture?: boolean,
   ): RemoveListener
 
-  const $isMobile: boolean
-
-  export { $addListener, $isMobile }
+  export const $isMobile: boolean
 }
 
 declare type OriginalEvent = MouseEvent | TouchEvent
@@ -35,18 +33,17 @@ interface DragMoveListener {
   (ev: DragMoveEvent): any
 }
 
-interface DragMoveBindFn {
-  (
+declare namespace DragMove {
+  declare function bind(
     element: Element | Window,
     listener: DragMoveListener,
     useCapture?: boolean,
-  ): RemoveListener
+  ): Utils.RemoveListener
+  declare function bind(
+    listener: DragMoveListener,
+    useCapture?: boolean,
+  ): Utils.RemoveListener
 
-  (listener: DragMoveListener, useCapture?: boolean): RemoveListener
-}
-
-declare namespace DragMove {
-  const bind: DragMoveBindFn
   export { bind }
 }
 

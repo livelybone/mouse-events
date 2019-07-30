@@ -1,17 +1,20 @@
 import { isMobile } from 'is-mobile'
 
 let prefix: 'on' | '' = ''
-let $addEventListener: 'addEventListener' | 'attachEvent'
-let $removeEventListener: 'removeEventListener' | 'detachEvent'
+let $addEventListener: 'addEventListener' | 'attachEvent' = 'addEventListener'
+let $removeEventListener: 'removeEventListener' | 'detachEvent' =
+  'removeEventListener'
 
-// detect event model
-if (window.addEventListener) {
-  $addEventListener = 'addEventListener'
-  $removeEventListener = 'removeEventListener'
-} else {
-  $addEventListener = 'attachEvent'
-  $removeEventListener = 'detachEvent'
-  prefix = 'on'
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  // detect event model
+  if (window.addEventListener) {
+    $addEventListener = 'addEventListener'
+    $removeEventListener = 'removeEventListener'
+  } else {
+    $addEventListener = 'attachEvent'
+    $removeEventListener = 'detachEvent'
+    prefix = 'on'
+  }
 }
 
 export interface CustomListener<T = Event> {

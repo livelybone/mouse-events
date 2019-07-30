@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/mouse-events",
-  "version": "0.1.0",
+  "version": "1.0.0-beta",
   "description": "Some reencapsulated mouse events, such as dragmove with deltaX/deltaY relative to mousedown, mouse wheel with good compatibility ...",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -33,7 +33,6 @@
   "homepage": "https://github.com/livelybone/mouse-events#readme",
   "devDependencies": {
     "@babel/core": "^7.5.0",
-    "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-typescript": "^7.3.3",
@@ -86,7 +85,7 @@
     ]
   },
   "dependencies": {
-    "@livelybone/mouse-wheel": "^4.0.3",
+    "@livelybone/mouse-wheel": "^4.1.0",
     "is-mobile": "^2.0.1"
   }
 }

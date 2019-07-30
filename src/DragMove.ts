@@ -14,16 +14,6 @@ interface DragMoveListener {
   (ev: DragMoveEvent): any
 }
 
-interface DragMoveBindFn {
-  (
-    element: Element | Window,
-    listener: DragMoveListener,
-    useCapture?: boolean,
-  ): RemoveListener
-
-  (listener: DragMoveListener, useCapture?: boolean): RemoveListener
-}
-
 const client = $isMobile ? 'mobile' : 'pc'
 
 const EventType = {
@@ -54,11 +44,18 @@ function getEvent(ev: OriginalEvent, startEvent: OriginalEvent) {
   }
 }
 
-const bind: DragMoveBindFn = (
-  element: any,
-  listener: any,
-  useCapture?: any,
-) => {
+export function bind(
+  element: Element | Window,
+  listener: DragMoveListener,
+  useCapture?: boolean,
+): RemoveListener
+
+export function bind(
+  listener: DragMoveListener,
+  useCapture?: boolean,
+): RemoveListener
+
+export function bind(element: any, listener: any, useCapture?: any) {
   if (typeof element === 'function') {
     /* eslint-disable no-param-reassign */
     useCapture = listener
@@ -107,5 +104,3 @@ const bind: DragMoveBindFn = (
 
   return $addListener(element, EventType.start, $listener, useCapture)
 }
-
-export { bind }
