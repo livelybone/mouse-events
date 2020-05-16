@@ -6,6 +6,9 @@ import { uglify } from 'rollup-plugin-uglify'
 import packageConf from './package.json'
 import baseConf from './rollup.config.base'
 
+const isWatch = process.env.BUILD_ENV === 'watch'
+const isDts = process.env.BUILD_ENV === 'dts'
+
 const formats = ['es', 'umd']
 
 function getEntries() {
@@ -45,20 +48,31 @@ const conf = entry => ({
   ],
 })
 
-export default [
-  ...[
-    {
-      name: 'index',
-      filename: './src/index.ts',
-      formats: ['es'],
-      needUglify: false,
-      external: true,
-    },
-    ...getEntries(),
-  ].map(conf),
-  {
-    input: './src/index.ts',
-    output: [{ file: './index.d.ts', format: 'es' }],
-    plugins: [dts()],
-  },
-]
+// eslint-disable-next-line no-nested-ternary
+export default isWatch
+  ? [
+      {
+        name: 'index',
+        filename: './src/index.ts',
+        formats: ['umd'],
+        needUglify: false,
+      },
+    ].map(conf)
+  : isDts
+  ? [
+      {
+        input: './src/index.ts',
+        output: [{ file: './index.d.ts', format: 'es' }],
+        plugins: [dts()],
+      },
+    ]
+  : [
+      {
+        name: 'index',
+        filename: './src/index.ts',
+        formats: ['es'],
+        needUglify: false,
+        external: true,
+      },
+      ...getEntries(),
+    ].map(conf)

@@ -1,16 +1,16 @@
 import { $addListener, $isMobile, RemoveListener } from './Utils'
 
-type OriginalEvent = MouseEvent | TouchEvent
-type DragMoveEventType = 'dragMoveStart' | 'dragMove' | 'dragMoveEnd'
+export type OriginalEvent = MouseEvent | TouchEvent
+export type DragMoveEventType = 'dragMoveStart' | 'dragMove' | 'dragMoveEnd'
 
-interface DragMoveEvent {
+export interface DragMoveEvent {
   type: DragMoveEventType
   deltaX: number
   deltaY: number
   originalEvent: OriginalEvent
 }
 
-interface DragMoveListener {
+export interface DragMoveListener {
   (ev: DragMoveEvent): any
 }
 

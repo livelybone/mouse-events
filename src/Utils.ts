@@ -1,5 +1,7 @@
 import { isMobile } from 'is-mobile'
 
+export const $isMobile = isMobile()
+
 let prefix: 'on' | '' = ''
 let $addEventListener: 'addEventListener' | 'attachEvent' = 'addEventListener'
 let $removeEventListener: 'removeEventListener' | 'detachEvent' =
@@ -7,7 +9,7 @@ let $removeEventListener: 'removeEventListener' | 'detachEvent' =
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   // detect event model
-  if (window.addEventListener) {
+  if ('addEventListener' in window) {
     $addEventListener = 'addEventListener'
     $removeEventListener = 'removeEventListener'
   } else {
@@ -25,7 +27,7 @@ export interface RemoveListener {
   (): void
 }
 
-export function $addListener<T = Event>(
+export function $addListener<T extends Event = Event>(
   element: Element | Window,
   eventName: string,
   listener: CustomListener<T>,
@@ -40,5 +42,3 @@ export function $addListener<T = Event>(
     removeListener(eName, listener, useCapture)
   }
 }
-
-export const $isMobile = isMobile()

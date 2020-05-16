@@ -1,6 +1,7 @@
 module.exports = {
   'parser': '@typescript-eslint/parser',
-  'parserOptions': {},
+  'parserOptions': {
+  },
   'env': {
     'browser': true,
     'commonjs': true,
@@ -12,15 +13,29 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   'rules': {
-    "@typescript-eslint/no-unused-vars": "warn",
-    'import/prefer-default-export': 'off',
-    'prettier/prettier': 'error',
+    'no-useless-constructor': 0,
+    'no-undef': 0,
+    'import/prefer-default-export': 0,
+    '@typescript-eslint/no-unused-vars': 1,
+    'prettier/prettier': 2,
+    'no-console': [2, { allow: ["warn", "error"] }],
+    'no-shadow': 2,
+    'import/extensions': [
+      2,
+      'ignorePackages',
+      {
+        'js': 'never',
+        'jsx': 'never',
+        'ts': 'never',
+        'tsx': 'never'
+      }
+    ],
   },
   'plugins': ['@typescript-eslint', 'prettier'],
   'settings': {
     'import/resolver': {
       'node': {
-        'extensions': ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+        'extensions': ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },

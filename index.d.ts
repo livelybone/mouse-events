@@ -1,22 +1,33 @@
 import * as MouseWheel from '@livelybone/mouse-wheel'
 
+declare const $isMobile: boolean
+
+interface CustomListener<T = Event> {
+  (ev: T): any
+}
+
+interface RemoveListener {
+  (): void
+}
+
+declare function $addListener<T extends Event = Event>(
+  element: Element | Window,
+  eventName: string,
+  listener: CustomListener<T>,
+  useCapture?: boolean,
+): RemoveListener
+
+declare const Utils$isMobile: typeof $isMobile
+type UtilsCustomListener = CustomListener
+type UtilsRemoveListener = RemoveListener
+declare const Utils$addListener: typeof $addListener
 declare namespace Utils {
-  export interface CustomListener<T = Event> {
-    (ev: T): any
+  export {
+    Utils$isMobile as $isMobile,
+    UtilsCustomListener as CustomListener,
+    UtilsRemoveListener as RemoveListener,
+    Utils$addListener as $addListener,
   }
-
-  export interface RemoveListener {
-    (): void
-  }
-
-  export function $addListener<T = Event>(
-    element: Element | Window,
-    eventName: string,
-    listener: CustomListener<T>,
-    useCapture?: boolean,
-  ): RemoveListener
-
-  export const $isMobile: boolean
 }
 
 declare type OriginalEvent = MouseEvent | TouchEvent
@@ -33,18 +44,29 @@ interface DragMoveListener {
   (ev: DragMoveEvent): any
 }
 
-declare namespace DragMove {
-  declare function bind(
-    element: Element | Window,
-    listener: DragMoveListener,
-    useCapture?: boolean,
-  ): Utils.RemoveListener
-  declare function bind(
-    listener: DragMoveListener,
-    useCapture?: boolean,
-  ): Utils.RemoveListener
+declare function bind(
+  element: Element | Window,
+  listener: DragMoveListener,
+  useCapture?: boolean,
+): RemoveListener
+declare function bind(
+  listener: DragMoveListener,
+  useCapture?: boolean,
+): RemoveListener
 
-  export { bind }
+declare const DragMoveOriginalEvent: typeof OriginalEvent
+declare const DragMoveDragMoveEventType: typeof DragMoveEventType
+type DragMoveDragMoveEvent = DragMoveEvent
+type DragMoveDragMoveListener = DragMoveListener
+declare const DragMovebind: typeof bind
+declare namespace DragMove {
+  export {
+    DragMoveOriginalEvent as OriginalEvent,
+    DragMoveDragMoveEventType as DragMoveEventType,
+    DragMoveDragMoveEvent as DragMoveEvent,
+    DragMoveDragMoveListener as DragMoveListener,
+    DragMovebind as bind,
+  }
 }
 
 export { DragMove, MouseWheel, Utils }
